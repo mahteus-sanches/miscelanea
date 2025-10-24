@@ -1,0 +1,35 @@
+return {
+  "huggingface/llm.nvim",
+  lazy = false,
+  config = function()
+    require("llm").setup({
+      lsp = {
+        bin_path = "/home/matheussanches/.local/share/nvim/mason/packages/llm-ls/llm-ls-x86_64-unknown-linux-gnu",
+      },
+      backend = "ollama",
+      model = "deepseek-coder:6.7b",
+      url = "http://localhost:11434/api/generate",
+      fim = {
+        enabled = true,
+        prefix = "<｜fim▁begin｜>",
+        middle = "<｜fim▁hole｜>",
+        suffix = "<｜fim▁end｜>",
+      },
+      request_body = {
+        options = {
+          temperature = 0.2,
+          top_p = 0.95,
+        },
+      },
+    })
+  end,
+  keys = {
+    {
+      "<c-j>",
+      function()
+        require("llm.completion").complete()
+      end,
+      mode = "i",
+    },
+  },
+}
